@@ -67,15 +67,7 @@ const speciesSchema = z.object({
     .transform((val) => (!val || val.trim() === "" ? null : val.trim())),
 });
 
-export default function SpeciesCard({
-  species,
-  sessionId,
-  searchTerm,
-}: {
-  species: Species;
-  sessionId: string;
-  searchTerm?: string;
-}) {
+export default function SpeciesCard({ species, sessionId }: { species: Species; sessionId: string }) {
   // Control whether the dialog is open or closed
   const [open, setDialogOpen] = useState<boolean>(false);
   // Control editing mode
@@ -104,16 +96,6 @@ export default function SpeciesCard({
   });
 
   const router = useRouter();
-
-  // Utility to find and highlight the search term in the description
-  const highlightSearchTerm = (description: string | null) => {
-    if (!description || !searchTerm) return description;
-
-    const regex = new RegExp(`(.{0,3})(${searchTerm})(.{0,3})`, "gi");
-    return description.replace(regex, (_, before, match, after) => {
-      return `${before}<mark>${match}</mark>${after}`;
-    });
-  };
 
   const onSubmit = async (data: SpeciesFormValues) => {
     // Instantiate Supabase client (for client components) and make update based on input data
@@ -217,9 +199,7 @@ export default function SpeciesCard({
       )}
       <h3 className="mt-3 text-2xl font-semibold">{species.common_name}</h3>
       <h4 className="text-lg font-light italic">{species.scientific_name}</h4>
-
-      {/* Highlighted description snippet */}
-      <p dangerouslySetInnerHTML={{ __html: highlightSearchTerm(species.description) }} />
+      <p>{species.description?.slice(0, 150).trim() + "..." ?? ""}</p>
 
       <Dialog open={open} onOpenChange={setDialogOpen}>
         <DialogTrigger asChild>
