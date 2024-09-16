@@ -33,7 +33,7 @@ export interface Database {
       };
       species: {
         Row: {
-          profiles: unknown;
+          profiles: Database["public"]["Tables"]["profiles"]["Row"];
           author: string;
           common_name: string | null;
           description: string | null;
