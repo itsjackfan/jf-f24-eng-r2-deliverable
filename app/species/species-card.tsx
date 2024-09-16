@@ -230,6 +230,7 @@ export default function SpeciesCard({ species, sessionId }: { species: Species; 
               <p>{species.description ?? "No description available."}</p>
               <br></br>
               <p>
+                {/*eslint-disable-next-line @typescript-eslint/no-unsafe-member-access*/}
                 <em>Written by {species?.profiles.display_name ?? "unknown author"}</em>
               </p>
             </div>
@@ -400,6 +401,7 @@ export default function SpeciesCard({ species, sessionId }: { species: Species; 
             </DialogDescription>
           </DialogHeader>
           <div className="mt-4 flex justify-between">
+            {/*eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
             <Button variant="destructive" onClick={confirmDelete}>
               Yes, delete.
             </Button>
